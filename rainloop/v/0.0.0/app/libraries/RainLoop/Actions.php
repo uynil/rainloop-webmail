@@ -5683,6 +5683,8 @@ class Actions
 		$bUseThreads = false;
 		$sThreadUid = '';
 
+		$oData = $iLimit;
+
 		$sRawKey = $this->GetActionParam('RawKey', '');
 		$aValues = $this->getDecodedClientRawKeyValue($sRawKey, 9);
 
@@ -5749,6 +5751,9 @@ class Actions
 		{
 			$this->cacheByKey($sRawKey);
 		}
+
+		ChromePhp::log('add hook pdo save message in DoMessageList');
+		$this->Plugins()->RunHook('pdo.save-message', array(&$oMessageList));
 
 		return $this->DefaultResponse(__FUNCTION__, $oMessageList);
 	}
