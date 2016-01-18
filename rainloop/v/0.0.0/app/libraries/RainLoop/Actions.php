@@ -3407,6 +3407,7 @@ class Actions
 	 */
 	public function DoLogout()
 	{
+		$this->Plugins()->RunHook('service.after-logout');
 		$oAccount = $this->getAccountFromToken(false);
 		if ($oAccount)
 		{
