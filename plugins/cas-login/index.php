@@ -45,12 +45,14 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
 
     public function FilterApplicationConfig(&$oConfig)
     {
+        $sCasHost = \trim($this->Config()->Get('plugin', 'cas_server_host', ''));
+        $iCasPort = $this->Config()->Get('plugin', 'cas_server_port', 8443);
 
         phpCAS::setDebug('/tmp/phpCAS-rl.log'); // Schrijft debug informatie naar een log-file
 
         // Parameters: CAS version, CAS server url, CAS server port, CAS server URI (same as host), 
         // boolean indicating session start, communication protocol (SAML) between application and CAS server
-        phpCAS::client(CAS_VERSION_3_0,'192.168.31.173',8443,'', true, 'saml');
+        phpCAS::client(CAS_VERSION_3_0,$sCasHost, $iCasPort,'', true, 'saml');
 
         // Server from which logout requests are sent
         // phpCAS::handleLogoutRequests(true, array('cas1.ugent.be','cas2.ugent.be','cas3.ugent.be','cas4.ugent.be','cas5.ugent.be','cas6.ugent.be'));
@@ -99,14 +101,14 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
     public function configMapping()
     {
         return Array(
-            \RainLoop\Plugins\Property::NewInstance('cas_server_url')->SetLabel('cas_server_ul')
+            \RainLoop\Plugins\Property::NewInstance('cas_server_host')->SetLabel('cas_server_host')
                 ->SetType(\RainLoop\Enumerations\PluginPropertyType::STRING_TEXT)
-                ->SetDescription('The url of cas server service.')
-                ->SetDefaultValue('https://localhost'),
+                ->SetDescription('The host of cas server service.')
+                ->SetDefaultValue('0.0.0.0'),
             \RainLoop\Plugins\Property::NewInstance('cas_server_port')->SetLabel('cas_server_port')
-                ->SetType(\RainLoop\Enumerations\PluginPropertyType::STRING_TEXT)
+                ->SetType(\RainLoop\Enumerations\PluginPropertyType::INT)
                 ->SetDescription('The port of server url.')
-                ->SetDefaultValue('8443'),
+                ->SetDefaultValue(8443),
             \RainLoop\Plugins\Property::NewInstance('label_3')->SetLabel('lable_3')
                 ->SetType(\RainLoop\Enumerations\PluginPropertyType::BOOL)
                 ->SetDescription('Throw an label 3 error instead of an access error.')
