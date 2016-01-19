@@ -3407,7 +3407,6 @@ class Actions
 	 */
 	public function DoLogout()
 	{
-		$this->Plugins()->RunHook('service.after-logout');
 		$oAccount = $this->getAccountFromToken(false);
 		if ($oAccount)
 		{
@@ -3421,6 +3420,7 @@ class Actions
 				\RainLoop\Utils::ClearCookie(\RainLoop\Actions::AUTH_SPEC_TOKEN_KEY);
 			}
 		}
+		$this->Plugins()->RunHook('service.after-logout');
 
 		return $this->TrueResponse(__FUNCTION__);
 	}
