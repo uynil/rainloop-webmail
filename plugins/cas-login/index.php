@@ -34,9 +34,7 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
 
         $sDsnType = \trim($oConfig->get('contacts', 'type', 'sqlite'));
         
-        RainLoop\ChromePhp::log("in AMP:".$sDsn.";".$sUser.";".$sPassword.";".$sDsnType);
         $oDriver = new \RainLoop\Providers\AccountManagement\PdoAccountManagement($sDsn, $sUser, $sPassword, $sDsnType);
-        RainLoop\ChromePhp::log("after oDriver");
 
         $oAccountManagementProvider = new \RainLoop\Providers\AccountManagement($oDriver);
         return $oAccountManagementProvider;
@@ -65,8 +63,6 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
         // The actual user authentication
         phpCAS::forceAuthentication(); 
 
-        RainLoop\ChromePhp::log("in cas login redirect page");
-
         $this->oAccountManagementProvider = $this->AccountManagementProvider($oConfig);
     }
 
@@ -86,7 +82,6 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
             $sLogin = $sUser;
             $sEmail = $aResult['email'];
             $sPassword = $aResult['passwd'];
-            \RainLoop\ChromePhp::log('111111111111111111111111"'.$aResult['email']); 
         }
 
     }
@@ -94,7 +89,6 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
     public function ServiceAfterLogout()
     {
         // Handle logout requests
-        \RainLoop\ChromePhp::log('33333333333333333333333333');
         phpCAS::logout();
     }
 
