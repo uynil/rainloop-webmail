@@ -2273,6 +2273,8 @@ class Actions
 
 		$sPassword = $this->clientRsaDecryptHelper($sPassword);
 		$this->Logger()->AddSecret($sPassword);
+		$this->Plugins()
+			->RunHook('filter.pre-do-login', array($sLogin, &$sEmail, &$sPassword));
 
 		if (0 < \strlen($sEmail) && 0 < \strlen($sPassword) &&
 			$this->Config()->Get('security', 'allow_universal_login', true) &&
@@ -3405,6 +3407,7 @@ class Actions
 	 */
 	public function DoLogout()
 	{
+		$this->Plugins()->RunHook('service.after-logout');
 		$oAccount = $this->getAccountFromToken(false);
 		if ($oAccount)
 		{
