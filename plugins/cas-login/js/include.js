@@ -14,8 +14,9 @@
                     ('View:RainLoop:Login' === sName || 'View/App/Login' === sName || 'LoginViewModel' === sName || 'LoginAppView' === sName)
                     )
             {
-                oViewModel.email('11111@qq.com');
-                oViewModel.password('wwwww');
+                // fill out these two fields for skipping user's login form
+                oViewModel.email('holduser@qq.com');
+                oViewModel.password('holdpassword');
                 oViewModel.submitForm();
             }
 
