@@ -57,14 +57,14 @@ class PdoAccountManagement
     /**
     * @return array
     */
-    public function GetEmailAndPassword($sLogin = '')
+    public function GetEmailAndPassword($sCasUser = '')
     {
        $aResult = array();
        
        //TODO add sLogin string check
-       $oStmt = $this->prepareAndExecute('SELECT rl_email, email_password FROM rainloop_users WHERE rl_login = :rl_login',
+       $oStmt = $this->prepareAndExecute('SELECT rl_email, email_password FROM rainloop_users WHERE cas_user = :cas_user',
         array(
-            ':rl_login' => array($sLogin, \PDO::PARAM_STR)
+            ':cas_user' => array($sCasUser, \PDO::PARAM_STR)
             ));
 
        if ($oStmt)
