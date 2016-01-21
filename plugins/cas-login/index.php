@@ -14,6 +14,7 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
         // $this->addHook('filter.http-paths', FilterHttpPaths)
         $this->addHook('filter.application-config', FilterApplicationConfig);
         $this->addHook('filter.pre-do-login', FilterPreDoLogin);
+        $this->addHook('filter.login-credentials.cas-login', FilterLoginСredentialsCasLogin);
         $this->addHook('service.after-logout', ServiceAfterLogout); 
         $this->addJs('js/include.js');
     }
@@ -86,6 +87,19 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
 
     }
 
+    public function FilterLoginСredentialsCasLogin(&$sEmail, &$sLogin, &$sPassword)
+    {
+        $bShortLogin = $this->Config()->Get('plugin', 'use_short_login', true);
+        if (!empty($sEmail) && $bShortLogin)
+        {
+            $aResult = $this->oAccountManagementProvider->GetLogin($sEmail);
+            if (is_array($aResult) && !empty($aResult['login']))
+            {
+                $sLogin = $aResult['login'];
+            }
+        }
+    }
+
     public function ServiceAfterLogout()
     {
         // Handle logout requests
@@ -103,6 +117,10 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
                 ->SetType(\RainLoop\Enumerations\PluginPropertyType::INT)
                 ->SetDescription('The port of server url.')
                 ->SetDefaultValue(8443),
+                \RainLoop\Plugins\Property::NewInstance('use_short_login')->SetLabel('use_short_login')
+                ->SetType(\RainLoop\Enumerations\PluginPropertyType::BOOL)
+                ->SetDescription('Use short login name.')
+                ->SetDefaultValue(true),
             \RainLoop\Plugins\Property::NewInstance('label_3')->SetLabel('lable_3')
                 ->SetType(\RainLoop\Enumerations\PluginPropertyType::BOOL)
                 ->SetDescription('Throw an label 3 error instead of an access error.')

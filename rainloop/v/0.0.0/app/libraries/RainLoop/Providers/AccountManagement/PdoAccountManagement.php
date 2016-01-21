@@ -57,14 +57,14 @@ class PdoAccountManagement
     /**
     * @return array
     */
-    public function GetEmailAndPassword($sLogin = '')
+    public function GetEmailAndPassword($sCasUser = '')
     {
        $aResult = array();
        
        //TODO add sLogin string check
-       $oStmt = $this->prepareAndExecute('SELECT rl_email, email_password FROM rainloop_users WHERE rl_login = :rl_login',
+       $oStmt = $this->prepareAndExecute('SELECT rl_email, email_password FROM rainloop_users WHERE cas_user = :cas_user',
         array(
-            ':rl_login' => array($sLogin, \PDO::PARAM_STR)
+            ':cas_user' => array($sCasUser, \PDO::PARAM_STR)
             ));
 
        if ($oStmt)
@@ -74,6 +74,31 @@ class PdoAccountManagement
             {
                 $aResult['email'] = $aFetch[0]['rl_email'];
                 $aResult['passwd'] = $aFetch[0]['email_password'];
+
+                return $aResult;
+            }
+       }
+    }
+
+    /**
+    * @return array
+    */
+    public function GetLogin($sEmail = '')
+    {
+       $aResult = array();
+
+       //TODO add sEmail string check
+       $oStmt = $this->prepareAndExecute('SELECT rl_login FROM rainloop_users WHERE rl_email = :rl_email',
+        array(
+            ':rl_email' => array($sEmail, \PDO::PARAM_STR)
+            ));
+
+       if ($oStmt)
+       {
+        $aFetch = $oStmt->fetchAll(\PDO::FETCH_ASSOC);
+        if (\is_array($aFetch) && 0 < \count($aFetch))
+            {
+                $aResult['login'] = $aFetch[0]['rl_login'];
 
                 return $aResult;
             }
