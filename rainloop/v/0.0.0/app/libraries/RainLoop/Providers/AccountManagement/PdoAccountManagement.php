@@ -80,5 +80,30 @@ class PdoAccountManagement
        }
     }
 
+    /**
+    * @return array
+    */
+    public function GetLogin($sEmail = '')
+    {
+       $aResult = array();
+
+       //TODO add sEmail string check
+       $oStmt = $this->prepareAndExecute('SELECT rl_login FROM rainloop_users WHERE rl_email = :rl_email',
+        array(
+            ':rl_email' => array($sEmail, \PDO::PARAM_STR)
+            ));
+
+       if ($oStmt)
+       {
+        $aFetch = $oStmt->fetchAll(\PDO::FETCH_ASSOC);
+        if (\is_array($aFetch) && 0 < \count($aFetch))
+            {
+                $aResult['login'] = $aFetch[0]['rl_login'];
+
+                return $aResult;
+            }
+       }
+    }
+
 
 }
