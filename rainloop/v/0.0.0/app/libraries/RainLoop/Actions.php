@@ -2110,6 +2110,7 @@ class Actions
 		$this->Logger()->AddSecret($sPassword);
 
 		$sLogin = $sEmail;
+		$this->Plugins()->RunHook('filter.login-credentials.cas-login', array(&$sEmail, &$sLogin, &$sPassword));
 		$this->Plugins()->RunHook('filter.login-credentials', array(&$sEmail, &$sLogin, &$sPassword));
 
 		$this->Logger()->AddSecret($sPassword);
