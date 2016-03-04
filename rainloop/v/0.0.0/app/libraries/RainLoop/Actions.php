@@ -6400,6 +6400,9 @@ class Actions
 						$aArrayToFrec[$oEmail->GetEmail(true)] = $oEmail->ToString(false, true);
 					}
 				}
+				$aArrayContactEmail = array($oMessage->MessageId(), $oMessage->GetSubject(), \time());
+
+				$this->AddressBookProvider($oAccount)->saveLastEmail($oAccount->ParentEmailHelper(), $aArrayContactEmail, $aArrayToFrec);
 
 				if (0 < \count($aArrayToFrec))
 				{
