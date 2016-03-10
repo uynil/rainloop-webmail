@@ -1949,6 +1949,7 @@ SQLITEINITIAL;
 					),
 
 					4 => array(
+'ALTER TABLE rainloop_ab_contacts ADD id_odoo int UNSIGNED NOT NULL DEFAULT 0 AFTER etag;',
 'ALTER TABLE rainloop_ab_contacts ADD last_email_date int UNSIGNED NOT NULL DEFAULT 0 AFTER etag;',
 'ALTER TABLE rainloop_ab_contacts ADD last_email_id varchar(64) NOT NULL DEFAULT \'\' AFTER etag;',
 'ALTER TABLE rainloop_ab_contacts ADD last_email_subject varchar(255) NOT NULL DEFAULT \'\' AFTER etag;'
