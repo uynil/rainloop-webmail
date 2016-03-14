@@ -2272,6 +2272,7 @@ class Actions
 
 		$oAccount = null;
 
+		$sLogin = $sEmail;
 		$sPassword = $this->clientRsaDecryptHelper($sPassword);
 		$this->Logger()->AddSecret($sPassword);
 		$this->Plugins()

@@ -12,10 +12,10 @@ class CasLoginPlugin extends \RainLoop\Plugins\AbstractPlugin
         // $this->addHook('main.farbrica', 'MainFabrica');
         // $this->addHook('filter.app-data', FilterAppData);
         // $this->addHook('filter.http-paths', FilterHttpPaths)
-        $this->addHook('filter.application-config', FilterApplicationConfig);
-        $this->addHook('filter.pre-do-login', FilterPreDoLogin);
-        $this->addHook('filter.login-credentials.cas-login', FilterLoginСredentialsCasLogin);
-        $this->addHook('service.after-logout', ServiceAfterLogout); 
+        $this->addHook('filter.application-config', 'FilterApplicationConfig');
+        $this->addHook('filter.pre-do-login', 'FilterPreDoLogin');
+        $this->addHook('filter.login-credentials.cas-login', 'FilterLoginСredentialsCasLogin');
+        $this->addHook('service.after-logout', 'ServiceAfterLogout'); 
         $this->addJs('js/include.js');
     }
 
